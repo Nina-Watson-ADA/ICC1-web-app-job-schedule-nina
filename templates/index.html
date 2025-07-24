@@ -2,11 +2,15 @@
 {% extends "base.html" %}
 {% block content %}
 
-
 <div class="bg-blue-50 border border-blue-200 text-blue-800 text-sm rounded p-4 mb-6">
   <strong>Note:</strong> Files uploaded through the 
   <a href="{{ url_for('upload_file') }}" class="underline text-blue-700">Upload page</a> 
   are stored in <strong>Azure Blob Storage</strong> (container: <code>jobfiles</code>).
+</div>
+
+<div class="bg-green-50 border border-green-200 text-green-800 text-sm rounded p-4 mb-6">
+  <strong>Note:</strong> Each uploaded file is also logged to 
+  <strong>Azure Table Storage</strong> (table: <code>uploadlogs</code>) for tracking and audit purposes.
 </div>
 
 <h1 class="text-4xl font-bold text-center mb-8">Available Jobs</h1>
@@ -32,3 +36,4 @@
     {% endfor %}
 </div>
 {% endblock content %}
+

@@ -205,3 +205,14 @@ def delete_job(job_id):
         print(f"Error deleting job: {e}")
         return redirect(url_for('job_detail', job_id=job.id))
 
+@app.route("/upload", methods=['GET', 'POST'])
+@login_required
+def upload_file():
+    """
+    Upload route for Blob Storage file uploads.
+    Currently only renders the upload.html template.
+    """
+    return render_template('upload.html', title='Upload File')
+
+
+

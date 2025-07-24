@@ -4,6 +4,9 @@ from app import app, db
 from models import User, Job # Import User and Job models
 from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
+from azure.data.tables import TableServiceClient
+import uuid
+from datetime import datetime
 
 @app.route("/")
 @app.route("/home")
@@ -213,6 +216,11 @@ def upload_file():
     Currently only renders the upload.html template.
     """
     return render_template('upload.html', title='Upload File')
+
+
+table_service = TableServiceClient.from_connection_string(AZURE_STORAGE_CONNECTION_STRING)
+table_client = table_service.get_table_client("uploadlogs")
+
 
 
 

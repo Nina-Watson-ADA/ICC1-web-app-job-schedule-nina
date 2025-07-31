@@ -211,11 +211,12 @@ def delete_job(job_id):
 @app.route("/uploads", methods=['GET', 'POST'])
 @login_required
 def upload_file():
-    """
-    Upload route for Blob Storage file uploads.
-    Currently only renders the upload.html template.
-    """
-    return render_template('uploads.html', title='Upload File')
+    return "Uploads route is working, but template not loading yet."
+    #"""
+    #Upload route for Blob Storage file uploads.
+    #Currently only renders the upload.html template.
+    #"""
+    #'return render_template('uploads.html', title='Upload File')
 
 
 table_service = TableServiceClient.from_connection_string(AZURE_STORAGE_CONNECTION_STRING)

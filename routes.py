@@ -13,8 +13,6 @@ from datetime import datetime
 def test():
     return "Test route is working!"
 
-
-####################################
 from azure.storage.blob import BlobServiceClient
 
 AZURE_STORAGE_CONNECTION_STRING = (
@@ -28,7 +26,6 @@ CONTAINER_NAME = "jobfiles"
 # Set up the Blob service client
 blob_service_client = BlobServiceClient.from_connection_string(AZURE_STORAGE_CONNECTION_STRING)
 container_client = blob_service_client.get_container_client(CONTAINER_NAME)
-#######################
 
 @app.route("/")
 @app.route("/home")
@@ -36,6 +33,12 @@ def home():
     """
     Home page route. Displays all jobs.
     """
+    # Query all jobs from the database, ordered by date posted (newest first)
+    jobs = Job.query.order_by(Job.date_posted.desc()).all()
+    # Add a formatted_date attribute to each job
+    for job in jobs:
+        job.formatted_date = job.date_posted.strftime('%Y-%m-%d')
+    return render_template('index.html', jobs=jobs)
     try:
         jobs = Job.query.order_by(Job.date_posted.desc()).all()
         for job in jobs:

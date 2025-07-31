@@ -208,18 +208,21 @@ def delete_job(job_id):
         print(f"Error deleting job: {e}")
         return redirect(url_for('job_detail', job_id=job.id))
 
-@app.route("/upload", methods=['GET', 'POST'])
+@app.route("/uploads", methods=['GET', 'POST'])
 @login_required
 def upload_file():
     """
     Upload route for Blob Storage file uploads.
     Currently only renders the upload.html template.
     """
-    return render_template('upload.html', title='Upload File')
+    return render_template('uploads.html', title='Upload File')
 
 
 table_service = TableServiceClient.from_connection_string(AZURE_STORAGE_CONNECTION_STRING)
 table_client = table_service.get_table_client("uploadlogs")
+
+
+
 
 
 

@@ -242,9 +242,12 @@ def upload_file():
     #'return render_template('uploads.html', title='Upload File')
 
 
-table_service = TableServiceClient.from_connection_string(AZURE_STORAGE_CONNECTION_STRING)
-table_client = table_service.get_table_client("uploadlogs")
-
+try:
+    table_service = TableServiceClient.from_connection_string(AZURE_STORAGE_CONNECTION_STRING)
+    table_client = table_service.get_table_client("uploadlogs")
+except Exception as e:
+    print("❌ Failed to connect to Azure Table Storage:", e)
+    table_client = None  # Prevent further crashes if used later
 
 
 

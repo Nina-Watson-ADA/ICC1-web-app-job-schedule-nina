@@ -8,6 +8,12 @@ from azure.data.tables import TableServiceClient
 import uuid
 from datetime import datetime
 
+
+@app.route("/test")
+def test():
+    return "Test route is working!"
+
+
 ####################################
 from azure.storage.blob import BlobServiceClient
 

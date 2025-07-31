@@ -33,12 +33,6 @@ def home():
     """
     Home page route. Displays all jobs.
     """
-    # Query all jobs from the database, ordered by date posted (newest first)
-    jobs = Job.query.order_by(Job.date_posted.desc()).all()
-    # Add a formatted_date attribute to each job
-    for job in jobs:
-        job.formatted_date = job.date_posted.strftime('%Y-%m-%d')
-    return render_template('index.html', jobs=jobs)
     try:
         jobs = Job.query.order_by(Job.date_posted.desc()).all()
         for job in jobs:

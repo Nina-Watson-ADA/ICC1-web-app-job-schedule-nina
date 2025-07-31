@@ -30,19 +30,36 @@ blob_service_client = BlobServiceClient.from_connection_string(AZURE_STORAGE_CON
 container_client = blob_service_client.get_container_client(CONTAINER_NAME)
 #######################
 
-
 @app.route("/")
 @app.route("/home")
 def home():
     """
     Home page route. Displays all jobs.
     """
-    # Query all jobs from the database, ordered by date posted (newest first)
-    jobs = Job.query.order_by(Job.date_posted.desc()).all()
-    # Add a formatted_date attribute to each job
-    for job in jobs:
-        job.formatted_date = job.date_posted.strftime('%Y-%m-%d')
-    return render_template('index.html', jobs=jobs)
+    try:
+        jobs = Job.query.order_by(Job.date_posted.desc()).all()
+        for job in jobs:
+            if job.date_posted:
+                job.formatted_date = job.date_posted.strftime('%Y-%m-%d')
+            else:
+                job.formatted_date = "N/A"
+        return render_template('index.html', jobs=jobs)
+    except Exception as e:
+        print("ERROR in /home route:", e)
+        return f"Internal error: {e}", 500
+
+#@app.route("/")
+#@app.route("/home")
+#def home():
+#    """
+#    Home page route. Displays all jobs.
+#    """
+#    # Query all jobs from the database, ordered by date posted (newest first)
+#    jobs = Job.query.order_by(Job.date_posted.desc()).all()
+#    # Add a formatted_date attribute to each job
+#    for job in jobs:
+#        job.formatted_date = job.date_posted.strftime('%Y-%m-%d')
+#    return render_template('index.html', jobs=jobs)
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():

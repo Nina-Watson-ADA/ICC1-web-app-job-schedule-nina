@@ -8,6 +8,23 @@ from azure.data.tables import TableServiceClient
 import uuid
 from datetime import datetime
 
+####################################
+from azure.storage.blob import BlobServiceClient
+
+AZURE_STORAGE_CONNECTION_STRING = (
+    "DefaultEndpointsProtocol=https;"
+    "AccountName=webappninaada;"
+    "AccountKey=9ltKLOZWzVyif0oDewWBUzyCA9oBn+Cxwit2V9kQObOEx6lxtiAH0m8/Ysela7ZLgkNffhX1HMnB+AStvsfETw==;"
+    "EndpointSuffix=core.windows.net"
+)
+CONTAINER_NAME = "jobfiles"
+
+# Set up the Blob service client
+blob_service_client = BlobServiceClient.from_connection_string(AZURE_STORAGE_CONNECTION_STRING)
+container_client = blob_service_client.get_container_client(CONTAINER_NAME)
+#######################
+
+
 @app.route("/")
 @app.route("/home")
 def home():
